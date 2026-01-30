@@ -9,9 +9,6 @@ const Title = styled.h1`
 `;
 
 export const Route = createFileRoute('/')({
-  loader: () => {
-    return 'Hello World';
-  },
   component: Index,
 });
 
