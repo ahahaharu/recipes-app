@@ -1,21 +1,21 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
 import { fetchRecipes } from '../api/recipes';
 import { RecipeCard } from '../components/RecipeCard';
+import { Container, Grid, SectionTitle } from '../components/ui/Layout';
+import { LinkButton } from '../components/ui/Button';
 
-const Container = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 4rem 2rem;
+const HomeContainer = styled(Container)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 4rem;
 `;
 
 const Header = styled.div`
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 1rem;
 `;
 
 const SiteTitle = styled.h1`
@@ -33,38 +33,6 @@ const Description = styled.p`
   margin: 0 auto;
   line-height: 1.5;
 `;
-
-const SectionTitle = styled.h2`
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
-  align-self: flex-start;
-  color: ${(props) => props.theme.colors.text.main};
-`;
-
-const Grid = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  margin-bottom: 4rem;
-`;
-
-const Button = styled(Link)`
-  display: inline-block;
-  padding: 12px 32px;
-  background-color: ${(props) => props.theme.colors.text.main};
-  color: white;
-  font-size: 1rem;
-  font-weight: 500;
-  text-decoration: none;
-  border-radius: 6px;
-  transition: opacity 0.2s;
-
-  &:hover {
-    opacity: 0.8;
-  }
-` as typeof Link;
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -84,7 +52,7 @@ function Index() {
   });
 
   return (
-    <Container>
+    <HomeContainer>
       <Header>
         <SiteTitle>Recipes App</SiteTitle>
         <Description>
@@ -93,17 +61,19 @@ function Index() {
         </Description>
       </Header>
 
-      <SectionTitle>Лучшие рецепты</SectionTitle>
+      <SectionTitle style={{ alignSelf: 'flex-start' }}>
+        Лучшие рецепты
+      </SectionTitle>
 
-      <Grid>
+      <Grid style={{ marginBottom: '1rem' }}>
         {topRecipesData?.recipes.map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe} />
         ))}
       </Grid>
 
-      <Button to="/recipes" search={{ page: 1 }}>
+      <LinkButton to="/recipes" search={{ page: 1 }}>
         Перейти ко всем рецептам
-      </Button>
-    </Container>
+      </LinkButton>
+    </HomeContainer>
   );
 }

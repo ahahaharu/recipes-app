@@ -2,6 +2,9 @@ import styled from '@emotion/styled';
 import { Link } from '@tanstack/react-router';
 
 const NavContainer = styled.nav`
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   display: flex;
   gap: 20px;
   padding: 1.5rem 2rem;

@@ -65,6 +65,12 @@ const Select = styled.select`
   }
 `;
 
+const RelativeWrapper = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
 const SelectIcon = styled(ChevronDown)`
   position: absolute;
   right: 10px;
@@ -107,7 +113,7 @@ export default function RecipeFilters({
 
       <SelectGroup>
         <Utensils size={18} color="#666" />
-        <div style={{ position: 'relative' }}>
+        <RelativeWrapper>
           <Select
             value={mealType}
             onChange={(e) => onMealTypeChange(e.target.value)}
@@ -119,11 +125,11 @@ export default function RecipeFilters({
             ))}
           </Select>
           <SelectIcon />
-        </div>
+        </RelativeWrapper>
       </SelectGroup>
 
       <SelectGroup>
-        <div style={{ position: 'relative' }}>
+        <RelativeWrapper>
           <Select value={sortBy} onChange={(e) => onSortChange(e.target.value)}>
             <option value="">По умолчанию</option>
             <option value="rating">По рейтингу</option>
@@ -132,7 +138,7 @@ export default function RecipeFilters({
             <option value="cookTimeMinutes">По времени готовки</option>
           </Select>
           <SelectIcon />
-        </div>
+        </RelativeWrapper>
       </SelectGroup>
     </FilterContainer>
   );

@@ -59,6 +59,13 @@ const MetaItem = styled.div`
     color: ${(props) => props.theme.colors.primary};
   }
 `;
+
+const TagsWrapper = styled.div`
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+`;
+
 const Tag = styled.span`
   background-color: #fff0f0;
   color: ${(props) => props.theme.colors.primary};
@@ -80,11 +87,11 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
     >
       <Image src={recipe.image} alt={recipe.name} loading="lazy" />
       <Content>
-        <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
+        <TagsWrapper>
           {recipe.tags.slice(0, 2).map((tag) => (
             <Tag key={tag}>{tag}</Tag>
           ))}
-        </div>
+        </TagsWrapper>
         <RecipeName>{recipe.name}</RecipeName>
         <MetaInfo>
           <MetaItem>
