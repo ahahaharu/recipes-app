@@ -22,8 +22,7 @@ const buttonStyles = (
 
   ${variant === 'primary' &&
   `
-    /* Теперь TS знает, что внутри theme есть colors и text! */
-    background-color: ${theme.colors.text.main};
+    background-color: ${theme.colors.primary};
     color: white;
     &:hover { opacity: 0.9; }
   `}
