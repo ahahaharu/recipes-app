@@ -20,7 +20,20 @@ export interface RecipesResponse {
   limit: number;
 }
 
-export const fetchRecipes = async (): Promise<RecipesResponse> => {
-  const response = await api.get<RecipesResponse>('/recipes');
+interface FetchRecipesParams {
+  limit: number;
+  skip: number;
+}
+
+export const fetchRecipes = async ({
+  limit,
+  skip,
+}: FetchRecipesParams): Promise<RecipesResponse> => {
+  const response = await api.get<RecipesResponse>('/recipes', {
+    params: {
+      limit,
+      skip,
+    },
+  });
   return response.data;
 };

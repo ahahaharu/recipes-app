@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Link } from '@tanstack/react-router';
 import type { Recipe } from '../api/recipes';
+import { Flame, Star } from 'lucide-react';
 
 const CardContainer = styled(Link)`
   display: flex;
@@ -44,11 +45,20 @@ const RecipeName = styled.h3`
 const MetaInfo = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 0.9rem;
   color: ${(props) => props.theme.colors.text.light};
   margin-top: auto;
 `;
 
+const MetaItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  / svg {
+    color: ${(props) => props.theme.colors.primary};
+  }
+`;
 const Tag = styled.span`
   background-color: #fff0f0;
   color: ${(props) => props.theme.colors.primary};
@@ -77,8 +87,15 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
         </div>
         <RecipeName>{recipe.name}</RecipeName>
         <MetaInfo>
-          <span>Рейтинг: {recipe.rating}</span>
-          <span>Каллории {recipe.caloriesPerServing} ккал</span>
+          <MetaItem>
+            <Star size={16} fill="gold" stroke="gold" />{' '}
+            <span>{recipe.rating}</span>
+          </MetaItem>
+
+          <MetaItem>
+            <Flame size={16} fill="orange" stroke="orange" />
+            <span>{recipe.caloriesPerServing} ккал</span>
+          </MetaItem>
         </MetaInfo>
       </Content>
     </CardContainer>
