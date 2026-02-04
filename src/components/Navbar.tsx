@@ -32,7 +32,9 @@ export default function Navbar() {
   return (
     <NavContainer>
       <NavLink to="/">Главная</NavLink>
-      <NavLink to="/recipes">Рецепты</NavLink>
+      <NavLink to="/recipes" search={{ page: 1 }}>
+        Рецепты
+      </NavLink>
     </NavContainer>
   );
 }

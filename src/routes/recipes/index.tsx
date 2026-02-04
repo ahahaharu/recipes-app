@@ -4,14 +4,19 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { fetchRecipes } from '../../api/recipes';
 import { RecipeCard } from '../../components/RecipeCard';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useDebounce } from '../../hooks/useDebounce';
+import RecipeFilters from '../../components/RecipeFilters';
 
 const PageContainer = styled.div`
   padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 const Title = styled.h2`
   font-size: 2rem;
-  margin-bottom: 1.5rem;
   color: ${(props) => props.theme.colors.text.main};
   border-left: 5px solid ${(props) => props.theme.colors.primary};
   padding-left: 1rem;
@@ -20,7 +25,7 @@ const Title = styled.h2`
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+  gap: 1rem;
 `;
 
 const Pagination = styled.div`
@@ -29,7 +34,7 @@ const Pagination = styled.div`
   align-items: center;
   gap: 0.5rem;
   margin-top: 1rem;
-  padding: 2rem 0;
+  padding: 0 0 1.5rem 0;
 `;
 
 interface PageButtonProps {
@@ -72,6 +77,9 @@ const PageButton = styled.button<PageButtonProps>`
 
 interface RecipesSearch {
   page: number;
+  q?: string;
+  mealType?: string;
+  sortBy?: string;
 }
 
 export const Route = createFileRoute('/recipes/')({
@@ -79,18 +87,75 @@ export const Route = createFileRoute('/recipes/')({
   validateSearch: (search: Record<string, unknown>): RecipesSearch => {
     return {
       page: Number(search?.page ?? 1) || 1,
+      q: (search?.q as string) || undefined,
+      mealType: (search?.mealType as string) || undefined,
+      sortBy: (search?.sortBy as string) || undefined,
     };
   },
 });
 
 function RecipesPage() {
-  const { page } = Route.useSearch();
+  const searchParams = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
+
+  const [localSearch, setLocalSearch] = useState(searchParams.q || '');
+  const debouncedSearch = useDebounce(localSearch, 500);
+
+  useEffect(() => {
+    if (debouncedSearch !== searchParams.q) {
+      navigate({
+        search: (old) => ({
+          ...old,
+          q: debouncedSearch || undefined,
+          page: 1,
+          mealType: undefined,
+        }),
+      });
+    }
+  }, [debouncedSearch, navigate, searchParams.q]);
+
+  const handleMealTypeChange = (type: string) => {
+    setLocalSearch('');
+    navigate({
+      search: (old) => ({
+        ...old,
+        mealType: type === 'All' ? undefined : type,
+        q: undefined,
+        page: 1,
+      }),
+    });
+  };
+
+  const handleSortChange = (sort: string) => {
+    navigate({
+      search: (old) => ({
+        ...old,
+        sortBy: sort || undefined,
+        page: 1,
+      }),
+    });
+  };
+
   const LIMIT = 6;
-  const skip = (page - 1) * LIMIT;
+  const skip = (searchParams.page - 1) * LIMIT;
+
   const { data, isLoading, isError, error, isPlaceholderData } = useQuery({
-    queryKey: ['recipes', page],
-    queryFn: () => fetchRecipes({ limit: LIMIT, skip }),
+    queryKey: [
+      'recipes',
+      searchParams.page,
+      searchParams.q,
+      searchParams.mealType,
+      searchParams.sortBy,
+    ],
+    queryFn: () =>
+      fetchRecipes({
+        limit: LIMIT,
+        skip,
+        q: searchParams.q,
+        mealType: searchParams.mealType,
+        sortBy: searchParams.sortBy,
+        order: 'desc',
+      }),
     placeholderData: keepPreviousData,
   });
 
@@ -115,38 +180,48 @@ function RecipesPage() {
   return (
     <PageContainer>
       <Title>Все рецепты</Title>
+
+      <RecipeFilters
+        searchQuery={localSearch}
+        onSearchChange={setLocalSearch}
+        mealType={searchParams.mealType || 'All'}
+        onMealTypeChange={handleMealTypeChange}
+        sortBy={searchParams.sortBy || ''}
+        onSortChange={handleSortChange}
+      />
       <Grid>
         {data?.recipes.map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe} />
         ))}
       </Grid>
-
-      <Pagination>
-        <PageButton
-          onClick={() => handlePageChange(page - 1)}
-          disabled={page === 1}
-        >
-          <ChevronLeft size={20} />
-        </PageButton>
-
-        {pagesArray.map((pageNum) => (
+      {totalPages > 1 && (
+        <Pagination>
           <PageButton
-            key={pageNum}
-            onClick={() => handlePageChange(pageNum)}
-            $active={page === pageNum}
-            disabled={isPlaceholderData}
+            onClick={() => handlePageChange(searchParams.page - 1)}
+            disabled={searchParams.page === 1}
           >
-            {pageNum}
+            <ChevronLeft size={20} />
           </PageButton>
-        ))}
 
-        <PageButton
-          onClick={() => handlePageChange(page + 1)}
-          disabled={isPlaceholderData || page === totalPages}
-        >
-          <ChevronRight size={20} />
-        </PageButton>
-      </Pagination>
+          {pagesArray.map((pageNum) => (
+            <PageButton
+              key={pageNum}
+              onClick={() => handlePageChange(pageNum)}
+              $active={searchParams.page === pageNum}
+              disabled={isPlaceholderData}
+            >
+              {pageNum}
+            </PageButton>
+          ))}
+
+          <PageButton
+            onClick={() => handlePageChange(searchParams.page + 1)}
+            disabled={isPlaceholderData || searchParams.page === totalPages}
+          >
+            <ChevronRight size={20} />
+          </PageButton>
+        </Pagination>
+      )}
     </PageContainer>
   );
 }
