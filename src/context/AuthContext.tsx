@@ -6,7 +6,6 @@ import {
   type ReactNode,
 } from 'react';
 import type { User } from '../api/auth';
-import { User } from 'lucide-react';
 
 interface AuthContextType {
   user: User | null;
@@ -18,19 +17,18 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
+  const [user, setUser] = useState<User | null>(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       try {
-        setUser(JSON.parse(storedUser));
+        return JSON.parse(storedUser);
       } catch (error) {
-        console.log('Ошибка при поиске пользователя', error);
-        localStorage.removeItem('user');
+        console.error('Error parsing user from local storage', error);
+        return null;
       }
     }
-  }, []);
+    return null;
+  });
 
   const login = (userData: User) => {
     setUser(userData);
