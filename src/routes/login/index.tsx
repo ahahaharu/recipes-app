@@ -5,13 +5,13 @@ import { useMutation } from '@tanstack/react-query';
 import { loginUser } from '../../api/auth';
 import { Lock, UserIcon } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const PageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80vh;
+  min-height: 100vh;
 `;
 
 const LoginCard = styled.div`
@@ -103,14 +103,19 @@ export const Route = createFileRoute('/login/')({
 function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useAuth();
+  const { login, isAuth } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate({ to: '/' });
+    }
+  }, [isAuth, navigate]);
 
   const mutation = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
       login(data);
-      navigate({ to: '/' });
     },
   });
 

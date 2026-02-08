@@ -6,14 +6,14 @@ import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { GlobalStyles } from './globalStyles';
 import { ThemeProvider } from '@emotion/react';
 import { theme } from './theme';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
 const queryClient = new QueryClient();
 
 const router = createRouter({
   routeTree,
   context: {
-    queryClient,
+    auth: undefined!,
   },
   defaultPreload: 'intent',
 });
@@ -24,13 +24,19 @@ declare module '@tanstack/react-router' {
   }
 }
 
+function App() {
+  const auth = useAuth();
+
+  return <RouterProvider router={router} context={{ auth }} />;
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <AuthProvider>
           <GlobalStyles />
-          <RouterProvider router={router} />
+          <App />
         </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>
