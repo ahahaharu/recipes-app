@@ -12,7 +12,7 @@ export interface User {
   firstName: string;
   lastName: string;
   image: string;
-  token: string;
+  accessToken: string;
 }
 
 export const loginUser = async (credentials: LoginParams): Promise<User> => {
