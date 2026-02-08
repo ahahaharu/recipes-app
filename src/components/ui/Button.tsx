@@ -2,10 +2,7 @@ import { css, type Theme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Link } from '@tanstack/react-router';
 
-const buttonStyles = (
-  theme: Theme,
-  variant: 'primary' | 'outline' = 'primary'
-) => css`
+const buttonStyles = (theme: Theme) => css`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -20,26 +17,17 @@ const buttonStyles = (
     background-color 0.2s;
   border: 1px solid transparent;
 
-  ${variant === 'primary' &&
-  `
-    background-color: ${theme.colors.primary};
-    color: white;
-    &:hover { opacity: 0.9; }
-  `}
-
-  ${variant === 'outline' &&
-  `
-    background-color: transparent;
-    border-color: ${theme.colors.border};
-    color: ${theme.colors.text.main};
-    &:hover { border-color: ${theme.colors.primary}; color: ${theme.colors.primary}; }
-  `}
+  background-color: ${theme.colors.primary};
+  color: white;
+  &:hover {
+    opacity: 0.9;
+  }
 `;
 
-export const Button = styled.button<{ variant?: 'primary' | 'outline' }>`
-  ${(props) => buttonStyles(props.theme, props.variant)}
+export const Button = styled.button`
+  ${(props) => buttonStyles(props.theme)}
 `;
 
-export const LinkButton = styled(Link)<{ variant?: 'primary' | 'outline' }>`
-  ${(props) => buttonStyles(props.theme, props.variant)}
+export const LinkButton = styled(Link)`
+  ${(props) => buttonStyles(props.theme)}
 ` as typeof Link;

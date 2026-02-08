@@ -49,6 +49,11 @@ export const fetchRecipes = async ({
   return response.data;
 };
 
+export const fetchRecipeById = async (id: string): Promise<Recipe> => {
+  const response = await api.get<Recipe>(`/recipes/${id}`);
+  return response.data;
+};
+
 export const MEAL_TYPES = [
   'All',
   'Dinner',
