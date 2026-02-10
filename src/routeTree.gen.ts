@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RecipesIndexRouteImport } from './routes/recipes/index'
 import { Route as LoginIndexRouteImport } from './routes/login/index'
+import { Route as ChatIndexRouteImport } from './routes/chat/index'
 import { Route as RecipesRecipeIdRouteImport } from './routes/recipes/$recipeId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,11 @@ const LoginIndexRoute = LoginIndexRouteImport.update({
   path: '/login/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChatIndexRoute = ChatIndexRouteImport.update({
+  id: '/chat/',
+  path: '/chat/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RecipesRecipeIdRoute = RecipesRecipeIdRouteImport.update({
   id: '/recipes/$recipeId',
   path: '/recipes/$recipeId',
@@ -38,12 +44,14 @@ const RecipesRecipeIdRoute = RecipesRecipeIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/recipes/$recipeId': typeof RecipesRecipeIdRoute
+  '/chat/': typeof ChatIndexRoute
   '/login/': typeof LoginIndexRoute
   '/recipes/': typeof RecipesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/recipes/$recipeId': typeof RecipesRecipeIdRoute
+  '/chat': typeof ChatIndexRoute
   '/login': typeof LoginIndexRoute
   '/recipes': typeof RecipesIndexRoute
 }
@@ -51,20 +59,28 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/recipes/$recipeId': typeof RecipesRecipeIdRoute
+  '/chat/': typeof ChatIndexRoute
   '/login/': typeof LoginIndexRoute
   '/recipes/': typeof RecipesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/recipes/$recipeId' | '/login/' | '/recipes/'
+  fullPaths: '/' | '/recipes/$recipeId' | '/chat/' | '/login/' | '/recipes/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/recipes/$recipeId' | '/login' | '/recipes'
-  id: '__root__' | '/' | '/recipes/$recipeId' | '/login/' | '/recipes/'
+  to: '/' | '/recipes/$recipeId' | '/chat' | '/login' | '/recipes'
+  id:
+    | '__root__'
+    | '/'
+    | '/recipes/$recipeId'
+    | '/chat/'
+    | '/login/'
+    | '/recipes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   RecipesRecipeIdRoute: typeof RecipesRecipeIdRoute
+  ChatIndexRoute: typeof ChatIndexRoute
   LoginIndexRoute: typeof LoginIndexRoute
   RecipesIndexRoute: typeof RecipesIndexRoute
 }
@@ -92,6 +108,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/chat/': {
+      id: '/chat/'
+      path: '/chat'
+      fullPath: '/chat/'
+      preLoaderRoute: typeof ChatIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/recipes/$recipeId': {
       id: '/recipes/$recipeId'
       path: '/recipes/$recipeId'
@@ -105,6 +128,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   RecipesRecipeIdRoute: RecipesRecipeIdRoute,
+  ChatIndexRoute: ChatIndexRoute,
   LoginIndexRoute: LoginIndexRoute,
   RecipesIndexRoute: RecipesIndexRoute,
 }

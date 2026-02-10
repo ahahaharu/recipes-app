@@ -66,6 +66,7 @@ export default function Navbar() {
         <NavLink to="/recipes" search={{ page: 1 }}>
           Рецепты
         </NavLink>
+        <NavLink to="/chat">WebSocket чат</NavLink>
       </LinksGroup>
 
       {isAuth ? (
