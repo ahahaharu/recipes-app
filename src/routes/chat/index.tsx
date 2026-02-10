@@ -61,7 +61,7 @@ const InputArea = styled.form`
 `;
 
 const Input = styled.input`
-  flex-grow: 1;
+  flex-grow: 2;
   padding: 12px;
   border-radius: ${(props) => props.theme.borderRadius.md};
   border: 1px solid ${(props) => props.theme.colors.border};
