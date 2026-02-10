@@ -1,4 +1,3 @@
-// src/globalStyles.tsx
 import { css, Global } from '@emotion/react';
 
 const globalStyles = css`
@@ -55,7 +54,7 @@ const globalStyles = css`
 
   #root {
     isolation: isolate;
-    height: 100%;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
   }

@@ -67,6 +67,7 @@ export default function Navbar() {
           Рецепты
         </NavLink>
         <NavLink to="/chat">WebSocket чат</NavLink>
+        <NavLink to="/graphql">GraphQL</NavLink>
       </LinksGroup>
 
       {isAuth ? (

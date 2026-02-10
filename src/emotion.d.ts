@@ -1,4 +1,3 @@
-// src/emotion.d.ts
 import '@emotion/react';
 import { theme } from './theme';
 

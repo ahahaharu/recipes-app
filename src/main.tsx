@@ -7,6 +7,8 @@ import { GlobalStyles } from './globalStyles';
 import { ThemeProvider } from '@emotion/react';
 import { theme } from './theme';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ApolloProvider } from '@apollo/client/react';
+import { appoloClient } from './api/appolo';
 
 const queryClient = new QueryClient();
 
@@ -33,12 +35,14 @@ function App() {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <AuthProvider>
-          <GlobalStyles />
-          <App />
-        </AuthProvider>
-      </ThemeProvider>
+      <ApolloProvider client={appoloClient}>
+        <ThemeProvider theme={theme}>
+          <AuthProvider>
+            <GlobalStyles />
+            <App />
+          </AuthProvider>
+        </ThemeProvider>
+      </ApolloProvider>
     </QueryClientProvider>
   </StrictMode>
 );
