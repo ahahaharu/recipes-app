@@ -56,6 +56,7 @@ const MessageTime = styled.span<{ $isMe: boolean }>`
 
 const InputArea = styled.form`
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
 `;
 
@@ -70,6 +71,10 @@ const Input = styled.input`
   &:focus {
     border-color: ${(props) => props.theme.colors.primary};
   }
+`;
+
+const SendButton = styled(Button)`
+  flex-grow: 1;
 `;
 
 export const Route = createFileRoute('/chat/')({
@@ -136,7 +141,7 @@ function ChatPage() {
             onChange={(e) => setInputText(e.target.value)}
             disabled={!isConnected}
           />
-          <Button>Отправить</Button>
+          <SendButton>Отправить</SendButton>
         </InputArea>
       </MessagesArea>
     </ChatLayout>

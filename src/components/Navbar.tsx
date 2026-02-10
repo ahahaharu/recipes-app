@@ -22,11 +22,13 @@ const NavContainer = styled.nav`
 const LinksGroup = styled.div`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 20px;
 `;
 
 const UserInfo = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 10px;
   font-size: 0.9rem;
