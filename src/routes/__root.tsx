@@ -6,8 +6,8 @@ import {
 } from '@tanstack/react-router';
 import Navbar from '../components/Navbar';
 import { Main } from '../components/Main';
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import type { AuthContextType } from '../context/AuthContext';
 
 interface RouterContext {
@@ -44,8 +44,8 @@ function RootComponent() {
         </Main>
       )}
 
-      <TanStackRouterDevtools />
-      <ReactQueryDevtools />
+      {/* <TanStackRouterDevtools />
+      <ReactQueryDevtools /> */}
     </>
   );
 }
