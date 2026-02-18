@@ -44,3 +44,19 @@ describe('Button Component', () => {
     expect(handleClick).not.toHaveBeenCalled();
   });
 });
+
+describe('Button Component Snapshots', () => {
+  it('matches snapshot for default state', () => {
+    const { asFragment } = renderWithTheme(<Button>Submit</Button>);
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('matches snapshot for disabled state', () => {
+    const { asFragment } = renderWithTheme(
+      <Button disabled>Loading...</Button>
+    );
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+});

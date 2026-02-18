@@ -79,3 +79,37 @@ describe('NavBar Integration', () => {
     expect(mockNavigate).toHaveBeenCalledWith({ to: '/login' });
   });
 });
+
+describe('Navbar Component Snapshots', () => {
+  it('matches snapshot for unauthenticated user (Guest)', () => {
+    vi.spyOn(AuthContextModule, 'useAuth').mockReturnValue({
+      isAuth: false,
+      user: null,
+      login: vi.fn(),
+      logout: vi.fn(),
+    });
+
+    const { asFragment } = renderWithTheme(<Navbar />);
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('matches snapshot for authenticated user (Logged In)', () => {
+    vi.spyOn(AuthContextModule, 'useAuth').mockReturnValue({
+      isAuth: true,
+      user: {
+        id: 1,
+        username: 'emilys',
+        email: 'test@test.com',
+        firstName: 'Emily',
+        lastName: 'Smith',
+        image: 'avatar.png',
+        accessToken: 'token',
+      },
+      login: vi.fn(),
+      logout: vi.fn(),
+    });
+
+    const { asFragment } = renderWithTheme(<Navbar />);
+    expect(asFragment()).toMatchSnapshot();
+  });
+});

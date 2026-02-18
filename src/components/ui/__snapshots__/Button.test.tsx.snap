@@ -1,0 +1,22 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Button Component Snapshots > matches snapshot for default state 1`] = `
+<DocumentFragment>
+  <button
+    class="css-5y1f2o"
+  >
+    Submit
+  </button>
+</DocumentFragment>
+`;
+
+exports[`Button Component Snapshots > matches snapshot for disabled state 1`] = `
+<DocumentFragment>
+  <button
+    class="css-5y1f2o"
+    disabled=""
+  >
+    Loading...
+  </button>
+</DocumentFragment>
+`;
