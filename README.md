@@ -2,7 +2,7 @@
 
 A modern frontend SPA for browsing recipes, featuring real-time communication and GraphQL integration. The application demonstrates advanced state management, type-safe routing, and various data fetching techniques.
 
-[View WebSite]()
+[View WebSite](https://deploy-preview-5--bright-dieffenbachia-2d7ff3.netlify.app/)
 
 ## Features
 
