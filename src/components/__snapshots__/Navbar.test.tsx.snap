@@ -1,0 +1,131 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Navbar Component Snapshots > matches snapshot for authenticated user (Logged In) 1`] = `
+<DocumentFragment>
+  <nav
+    class="css-1jkixv1"
+  >
+    <div
+      class="css-1kp3j4r"
+    >
+      <a
+        class="css-dkq0si"
+        href="/"
+      >
+        Главная
+      </a>
+      <a
+        class="css-dkq0si"
+        href="/recipes"
+      >
+        Рецепты
+      </a>
+      <a
+        class="css-dkq0si"
+        href="/chat"
+      >
+        WebSocket чат
+      </a>
+      <a
+        class="css-dkq0si"
+        href="/graphql"
+      >
+        GraphQL
+      </a>
+    </div>
+    <div
+      class="css-1wmalhp"
+    >
+      <div
+        style="display: flex; align-items: center; gap: 8px;"
+      >
+        <img
+          alt="avatar"
+          src="avatar.png"
+          style="width: 32px; height: 32px; border-radius: 50%;"
+        />
+        <span>
+          emilys
+        </span>
+      </div>
+      <button
+        class="css-5y1f2o"
+        style="padding: 6px 12px; font-size: 0.8rem; margin-left: 10px;"
+      >
+        <svg
+          aria-hidden="true"
+          class="lucide lucide-log-out"
+          fill="none"
+          height="14"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          style="margin-right: 6px;"
+          viewBox="0 0 24 24"
+          width="14"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="m16 17 5-5-5-5"
+          />
+          <path
+            d="M21 12H9"
+          />
+          <path
+            d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+          />
+        </svg>
+        Выйти
+      </button>
+    </div>
+  </nav>
+</DocumentFragment>
+`;
+
+exports[`Navbar Component Snapshots > matches snapshot for unauthenticated user (Guest) 1`] = `
+<DocumentFragment>
+  <nav
+    class="css-1jkixv1"
+  >
+    <div
+      class="css-1kp3j4r"
+    >
+      <a
+        class="css-dkq0si"
+        href="/"
+      >
+        Главная
+      </a>
+      <a
+        class="css-dkq0si"
+        href="/recipes"
+      >
+        Рецепты
+      </a>
+      <a
+        class="css-dkq0si"
+        href="/chat"
+      >
+        WebSocket чат
+      </a>
+      <a
+        class="css-dkq0si"
+        href="/graphql"
+      >
+        GraphQL
+      </a>
+    </div>
+    <div
+      class="css-1kp3j4r"
+    >
+      <a
+        class="css-dkq0si"
+        href="/login"
+      >
+        Войти
+      </a>
+    </div>
+  </nav>
+</DocumentFragment>
+`;
